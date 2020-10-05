@@ -2,6 +2,15 @@ import speech_recognition
 #import pyttsx
 import os
 import time
+import pyttsx3 #pip install pyttsx3
+import speech_recognition as sr #pip install speechRecognition
+import datetime
+import wikipedia #pip install wikipedia
+import webbrowser
+import smtplib
+#from ex import * weather module made by me..
+import sys 
+import weather_forecast as wf
 
 #speech_engine = pyttsx.init('sapi5') # see http://pyttsx.readthedocs.org/en/latest/engine.html#pyttsx.init
 #speech_engine.setProperty('rate', 150)
@@ -11,6 +20,18 @@ import time
 	#speech_engine.runAndWait()
 
 recognizer = speech_recognition.Recognizer()
+
+def wishMe():
+    hour = int(datetime.datetime.now().hour)
+    if hour>=0 and hour<12:
+        speak("Good Morning!")
+
+    elif hour>=12 and hour<18:
+        speak("Good Afternoon!")   
+
+    else:
+        speak("Good Evening!")  
+
 
 
 def listen():
@@ -63,6 +84,55 @@ def ouvir():
 	except:
 		print "Error"
 	return a
+if __name__ == "__main__":
+    wishMe()
+    while True:
+    # if 1:
+        query = takeCommand().lower()
+
+        # Logic for executing tasks based on query
+        if 'wikipedia' in query:
+            speak('Searching Wikipedia...')
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=3)
+            speak("According to Wikipedia")
+            print(results)
+            speak(results)
+
+        elif 'open youtube' in query:
+            webbrowser.open("youtube.com")
+            speak('okay')
+
+        elif 'open google' in query:
+            webbrowser.open("google.com")
+            speak('okay')
+
+        elif 'open stackoverflow' in query:
+            webbrowser.open("stackoverflow.com") 
+            speak('okay')
+
+        elif 'open facebook' in query:
+            webbrowser.open("facebook.com")
+            speak('okay')
+
+         
+        elif 'play music' in query:
+              webbrowser.open("gaana.com/topcharts")
+              speak('okay')
+
+            
+
+        elif 'the time' in query:
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")    
+            speak(f"Sir, the time is {strTime}")
+
+        elif 'weather' in query:
+           #x=input("Enter the place-")
+            #y=input("Enter the Time(24hr)-")
+            #z=input("Enter the date(Y-m-d)-")
+            wf.forecast(place = 'Mumbai', time=datetime.datetime.now(), date=datetime.now().strftime('%Y-%m-%d'), forecast="daily")
+            speak('okay')
+
 	
 #say("Bom dia najinha")
 say("Bom dia mestre najinha")
